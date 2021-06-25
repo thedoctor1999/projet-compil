@@ -1,5 +1,6 @@
 %{
 #include<stdio.h>
+#include "ts.h"
 
 int yylex();
 int yyerror(char *s);
@@ -11,7 +12,8 @@ int yyerror(char *s);
 
 %%
 calclist:
-        | IDENTIFIANT NEWLINE
+        | calclist IDENTIFIANT NEWLINE
+        | calclist NEWLINE
         | calclist exp NEWLINE  {printf("= %d\n", $2);}
         ;
 
@@ -31,14 +33,10 @@ term: NUMB
     ;
 %%
 
+
 int main(int argc, char **argv){
-    if(argc >1){
-        if(!(yyin = fopen(argv[1], "r"))) {
-            perror(argv[1]);
-            return (1);
-        }
-    }
     yyparse();
+    afficherTS();
 }
 
 int yyerror(char *s){
