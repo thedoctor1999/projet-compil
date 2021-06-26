@@ -72,6 +72,7 @@ void addref(int lineno, char* word){
 
 void setValue(char* symbol, char* valeur){
     struct symbol *sp = chercher(symbol);
+    printf("set value de %s a %s\n", symbol, valeur);
     sp->valeur = strdup(valeur);
 }
 

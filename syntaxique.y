@@ -65,7 +65,7 @@ listeidf: IDENTIFIANT                                   {struct liste_de_chaines
                                                          $$->suivant = nouveau;
                                                          liste_ident = $$->suivant;}
 ;
-affectation: IDENTIFIANT AFFECTER expAritmetique PV     {char* s = malloc(20*sizeof(char));   sprintf(s, "%d", $3);   setValue($1, s);}
+affectation: IDENTIFIANT AFFECTER expAritmetique PV     {char* s = malloc(20*sizeof(char));   sprintf(s, "%d", $3); printf("\n%s %s %s %s\n", $1, $2, $3, $4);   setValue($1, s);}
 ;
 
 expAritmetique: factor
