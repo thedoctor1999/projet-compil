@@ -1,6 +1,6 @@
 //test code
 6+9         //ca devrait ecrire sa valeur
-REAL x, h;
+REAL x;
 x := 9;
 //test commentaire
 10+6
