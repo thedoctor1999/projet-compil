@@ -4,7 +4,8 @@
 //#include "ts.h"
 %}
 %%
-[a-zA-Z]+   {addref(yylineno, yytext);  printf(" IDENTIFIANT "); return IDENTIFIANT;}
+"REAL"   {yylval.chaine=yytext;   printf(" TYPE "); return TYPE;}
+[a-zA-Z]+   {yylval.chaine=yytext;   addref(yylineno, yytext);  printf(" IDENTIFIANT "); return IDENTIFIANT;}
 "+"     {   return PLUS;}
 "-"     {   return MINUS;}
 "*"     {   return TIMES;}
@@ -12,7 +13,10 @@
 "|"     {   return ABSOL;}
 "("     {   return PO;}
 ")"     {   return PF;}
-[0-9]+    {   yylval = atoi(yytext);  return NUMB;}
+";"     {   return PV;}
+","     {   return VIRG;}
+":="    {   return AFFECTER;}
+[0-9]+    {   yylval.entier = atoi(yytext);  return NUMB;}
 \n      { printf(" NEWLINE \n");  return NEWLINE;}
 [ \t]   {   }
 "//".*  { return NEWLINE;}

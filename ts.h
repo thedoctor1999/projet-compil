@@ -10,6 +10,7 @@ typedef struct ref {
 
 typedef struct symbol{
     char *name;
+    char *type;
     int valeur;
     struct ref *reflist;
 }symbol;
@@ -49,6 +50,7 @@ struct symbol *chercher(char* sym){
     abort();    /* tried them all, table is full */
 }
 
+
 void addref(int lineno, char* word){
     struct ref *r;
     struct symbol *sp = chercher(word);
@@ -66,8 +68,9 @@ void addref(int lineno, char* word){
     sp->reflist = r;
 }
 
-void setValeur(char* word){
-    if( sp->reflist && sp->reflist->lineno == lineno)  return;
+void setType(char* symbol, char* type){
+    struct symbol *sp = chercher(symbol);
+    sp->type = type;
 }
 
 void afficherTS(){
@@ -75,11 +78,13 @@ void afficherTS(){
 
     printf("\n\t\tTable des Symbols\t\t\n\n");
     printf("Name\t\t");
+    printf("Type\t\t");
     printf("References\t\t\n\n");
 
     for(int i=0; i<NHASH; i++){
         if(symtab[i].name){
             printf("%s\t\t", symtab[i].name);
+            printf("%s\t\t", symtab[i].type);
             r = symtab[i].reflist;
             do{
                 printf(" %d,", r->lineno);
