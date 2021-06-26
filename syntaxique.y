@@ -14,12 +14,12 @@ int yyerror(char *s);
 calclist:
         | calclist IDENTIFIANT NEWLINE
         | calclist NEWLINE
-        | calclist exp NEWLINE  {printf("= %d\n", $2);}
+        | calclist expAritmetque NEWLINE  {printf("= %d\n", $2);}
         ;
 
-exp: factor
-    | exp PLUS factor   {$$ = $1 + $3;}
-    | exp MINUS factor  {$$ = $1 - $3;}
+expAritmetque: factor
+    | expAritmetque PLUS factor   {$$ = $1 + $3;}
+    | expAritmetque MINUS factor  {$$ = $1 - $3;}
     ;
 
 factor: term
@@ -28,7 +28,7 @@ factor: term
     ;
 
 term: NUMB
-    | PO exp PF                {$$ = $2;}
+    | PO expAritmetque PF                {$$ = $2;}
     | ABSOL term ABSOL          {$$ = $2 >= 0 ? $2 : -$2;}
     ;
 %%
