@@ -9,9 +9,11 @@ typedef struct ref {
 }ref;
 
 typedef struct symbol{
+    int state;
     char *name;
+    char nature;
     char *type;
-    int valeur;
+    char *valeur;
     struct ref *reflist;
 }symbol;
 
@@ -47,7 +49,7 @@ struct symbol *chercher(char* sym){
         if(++sp >= symtab+NHASH)    sp = symtab;
     }
     fputs("symbol table overflow\n", stderr);
-    abort();    /* tried them all, table is full */
+    abort();    //table is full
 }
 
 
@@ -68,23 +70,39 @@ void addref(int lineno, char* word){
     sp->reflist = r;
 }
 
+void setValue(char* symbol, char* valeur){
+    struct symbol *sp = chercher(symbol);
+    sp->valeur = strdup(valeur);
+}
+
 void setType(char* symbol, char* type){
     struct symbol *sp = chercher(symbol);
-    sp->type = type;
+    sp->type = strdup(type);
 }
+
 
 void afficherTS(){
     ref *r;
 
-    printf("\n\t\tTable des Symbols\t\t\n\n");
-    printf("Name\t\t");
-    printf("Type\t\t");
-    printf("References\t\t\n\n");
+    printf("\n\t\tTable des Symbols\t\t\n\n|");
+    printf("state\t\t|");
+    printf("Name\t\t|");
+    printf("nature\t\t|");
+    printf("Type\t\t|");
+    printf("valeur\t\t|");
+    printf("References\t\t\n");
+    for(int i=0; i<100; i++)
+        printf("-");
+    printf("\n");
 
     for(int i=0; i<NHASH; i++){
         if(symtab[i].name){
-            printf("%s\t\t", symtab[i].name);
-            printf("%s\t\t", symtab[i].type);
+            printf("|%d\t\t|", symtab[i].state);
+            printf("%s\t\t|", symtab[i].name);
+            printf("%d\t\t|", symtab[i].nature);
+            printf("%s\t\t|", symtab[i].type);
+            printf("%s\t\t|", symtab[i].valeur);
+
             r = symtab[i].reflist;
             do{
                 printf(" %d,", r->lineno);

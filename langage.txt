@@ -1,0 +1,10 @@
+//test code
+6+9         //ca devrait ecrire sa valeur
+REAL x, h;
+x := 9;
+//test commentaire
+10+6
+REAL y; //something
+10
+//lorem ipsum
+
